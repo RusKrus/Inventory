@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Привет и добро пожаловать в мое приложение **Inventory**, созданное как тестовое задание для компании [**dZENcode**](https://dzencode.com)! 
 
-## Getting Started
+### Приглашаю вас попробовать приложение, которое позволяет вашей команде удобно и эффективно управлять приходами и продуктами в них. 
 
-First, run the development server:
+## Про этот проэкт
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Этот проэкт был создан как демонстрация моих навыков работы с современном стэком, необходимым для разработки веб-приложений. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Основной функционал
+* Возможность просматривать доступные приходы и продукты, а так же данные относительно них. 
+* Продукты можно посмотреть в отдельной вкладке с возможностью фильтрации по типу продукта, либо же во вклакде приходов, фильтруя продукты относительного каждого отдельного прихода. 
+* Возможность удалять приходы, корректно обрабатывая общее количество отображаемых продуктов после удаления прихода, а так же создавать пустые приходы.  
+* Пользователь имеет возможность на любой вкладке следить за временем и датой, а так же отслеживать пользователей онлайн вместе с ним 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Использованные технологии
+* HTML/CSS/JS 
+* Next.js 
+* Tailwind
+* TypeScript 
+* Redux tooklit (react-redux) + браузерный session storage API (для сохранения состояния между перезагрузками страницы)
+* Node.js + Webscoket (библиотека ws) + браузерный Websocket API
+* Модуль concurrently
+* Docker 
+* API от [ExchangeRate-API](https://www.exchangerate-api.com/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Начало работы
 
-To learn more about Next.js, take a look at the following resources:
+### Предварительные требования
+**Убедитесь, что на вашем компьютере установлены:**
+* **Node.js:** Версия 20x или выше 
+* **Git:** Для клонирования репозитория
+* **Docker (опционально):** Требуется только для запуска с помощью Docker.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Так же убедитесь, что порты 3000 и 4000 свободны, так как они используются для двух серверов, что работают в приложении (Next.js работает на 3000, сервер для websocket работает на 4000).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Копирование файлов на локальную машину
+1. **Клонируйте репозиторий:**
+    ```bash
+    git clone https://github.com/RusKrus/Inventory.git
+    ```
+2. **Перейдите в папку проекта:**
+    ```bash
+    cd test-task-dzen
+    ```
+3. **Установите зависимости:**
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+### После этого, есть три способа запуска приложения на локальной машине:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* **Запуск через docker (рекомендуется). Этот способ собирает production сборку.**
+    1. **Соберите docker образ**
+        ```bash
+        docker build -t test-task-dzen .
+        ```
+    2.  **Запустите Docker-контейнер:**
+        ```bash
+        docker run --rm -p 3000:3000 -p 4000:4000 --name my-test-app-container test-task-dzen
+        ```
+    3.  **Откройте приложение в браузере:**
+        Перейдите по адресу [http://localhost:3000](http://localhost:3000). WebSocket сервер бработает по адресу `ws://localhost:4000`.
+    
+* **Запуск dev сборки через терминал.**
+    1.  **Запустите приложение:**
+        ```bash
+        npm run dev
+        ```
+        (Эта команда одновременно запустит Next.js dev server и websocket сервер).
+    2.  **Откройте приложение в браузере:**
+        Перейдите по адресу [http://localhost:3000](http://localhost:3000). WebSocket сервер работает по адресу `ws://localhost:4000`.
+    
+* **Запуск production сборки через терминал.**
+    1. **Создайте production сборку приложения**
+        ```bash
+        npm run build
+        ```
+    2.  **Запустите приложение:**
+        ```bash
+        npm run start
+        ```
+        (Эта команда одновременно запустит Next.js production server и websocket сервер).
+    3.  **Откройте приложение в браузере:**
+        Перейдите по адресу [http://localhost:3000](http://localhost:3000). WebSocket сервер работает по адресу `ws://localhost:4000`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Будущая разработка
+
+В моем приложении все еще не хватает функционала. В будущем планируется реализовать:
+* Функционал корректного удаления отдельных продуктов (как через вкладку "Продукты", так и через вкладку "Приходы")
+* Добавление новых продуктов в уже существующий приходд
+* Усовершенствовать создание новых приходов, поставив валидацию на одинаковые имена 
+* Увеличение информации, предотсавляемой пользователю по поводу отдельных прихода и продукта 
+* Вкладки "Настройки", "Группы", "Пользователи"
+* Backend (Авторизация, использование базы данных для хранения информации) 
+
+**И многое другое. Не пропустите будущие обновления!**
+
+
+## Контакты 
+**Для связи со мной и предложениям по сайту, используйте:**
+* [Мою почту](mailto:belonoir@gmail.com)
+* [Мой профиль LinkedIn](https://www.linkedin.com/in/tomarus99/)
+
+
