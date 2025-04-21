@@ -7,7 +7,13 @@ export default function OnlineCounter(): React.JSX.Element {
 
     useEffect(() => {
         let clientSocket: WebSocket | null = null;
-        clientSocket = new WebSocket('ws://localhost:4000/');
+        const domain = window.location.hostname;
+        if(window.location.protocol === 'https:'){
+            clientSocket = new WebSocket(`wss://${domain}:4000/`);
+        }
+        else{
+            clientSocket = new WebSocket(`ws://${domain}:4000/`);
+        };
         clientSocket.onopen = (): void => {
             console.log('Новой пользователь зашел в приложение!');
         };
