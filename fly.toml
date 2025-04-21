@@ -20,3 +20,14 @@ primary_region = 'ams'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+
+[[services]]
+  internal_port = 4000 
+  protocol = "tcp"     
+  processes = ['app']  
+
+
+[[services.ports]]
+  port = 4000        
+  handlers = ["tls"]  
