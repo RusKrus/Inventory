@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Order, Product, OrdersState } from '@/utils/types';
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { getOrders } from "@/utils/mockFetching";
+import { getOrders } from "@/fetching/mockFetching";
 
 export const fetchingOrders = createAsyncThunk(
     'orders/fetchingOrders', 
@@ -14,7 +14,8 @@ export const fetchingOrders = createAsyncThunk(
 const initialState: OrdersState = {
     status: 'initial',
     orders: [],
-    products: []
+    products: [],
+    productTypes: ['Клавиатура', 'Гарнитура', 'Мышь', 'Монитор', 'Другое']
 };
 
 const ordersSlice = createSlice({
@@ -34,6 +35,9 @@ const ordersSlice = createSlice({
         addOrder(state, action: PayloadAction<{order: Order}>){
             state.orders.push(action.payload.order);
             state.status='updated';
+        },
+        addProductType(state, action: PayloadAction<{newProductType:string}>){
+            state.productTypes.push(action.payload.newProductType);
         }
     },
     extraReducers: (builder)=>{
@@ -53,5 +57,5 @@ const ordersSlice = createSlice({
 
 });
 
-export const { setDataFromSessionStorage, removeOrder, addOrder } = ordersSlice.actions;
+export const { setDataFromSessionStorage, removeOrder, addOrder, addProductType } = ordersSlice.actions;
 export default ordersSlice.reducer;

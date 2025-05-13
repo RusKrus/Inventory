@@ -1,8 +1,11 @@
+import type { Currency } from '@/utils/types';
+
 export const getUaToUsdRate = async () => {
     try{
         const responseJson = await fetch(`https://api.exchangerate-api.com/v4/latest/USD`); 
         if (responseJson.ok){
-            const response = await responseJson.json();
+            const response: Currency = await responseJson.json();
+            
             return response.rates.UAH;
         }
         else{

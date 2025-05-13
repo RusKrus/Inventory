@@ -15,8 +15,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         dispatch(fetchingCurrency());
 
-
-
         const savedOrders: string | null = sessionStorage.getItem('orders');
         const savedProducts: string | null = sessionStorage.getItem('products');
         
@@ -33,7 +31,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(()=>{
-
         if(ordersState.status ===  'loaded'){
             const storageSetter = (): void => {
                 console.log('data set to storage');
@@ -46,14 +43,16 @@ export default function Template({ children }: { children: React.ReactNode }) {
             return () => {
                 window.removeEventListener('beforeunload', storageSetter);
             };
-        }else if(ordersState.status ===  'updated'){
+        }
+        else if(ordersState.status ===  'updated'){
             console.log('data set to storage');
             const jsonOrders: string = JSON.stringify(ordersState.orders);
             const jsonProducts: string = JSON.stringify(ordersState.products);
             sessionStorage.setItem('orders', jsonOrders);
             sessionStorage.setItem('products', jsonProducts); 
         };
-    }, [ordersState]);
+        
+    }, [ordersState.status, ordersState.products]);
 
     return <div>{children}</div>
   }
