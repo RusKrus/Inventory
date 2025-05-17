@@ -29,7 +29,7 @@
         @apply w-1/2 p-1 mb-0
     }
 
-    .modal-textarea-fiel {
+    .modal-textarea-field {
         @apply border-1 border-black w-full h-30 rounded-lg p-1 mb-0 
     }
 

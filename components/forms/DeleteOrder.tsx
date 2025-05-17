@@ -9,10 +9,11 @@ export default function DeleteOrder({orderId}: DeleteOrderProps): React.JSX.Elem
 
     const dispatch = useAppDispatch();
     const currentOrder: Order | string = useAppSelector(state=>state.ordersData.orders.find((order: Order)=>order.id === orderId))??'Приход по такому id не найден!';
+    const relatedProducts: Product[] = useAppSelector(state=>state.ordersData.products.filter((product: Product)=>product.order===orderId));
     const handleDeleteOrder = (): void => {
         if(orderId){
             dispatch(removeOrder({orderId}));
-        };
+        }
     };
 
     if(typeof currentOrder === 'string'){
@@ -27,10 +28,16 @@ export default function DeleteOrder({orderId}: DeleteOrderProps): React.JSX.Elem
     return (
         <>
             <h3 className='font-bold text-xl p-5 bg-red-600 rounded-t-md text-white mb-5'>Вы точно хотите удалить этот приход?</h3>
-            <h4 className='text-xl text-center mb-3'>Имя прихода: <span className='font-bold underline decoration-2 underline-offset-5 '>{currentOrder.title}</span></h4>
+            <div className='px-4 font-semibold'>
+                <h4 className='text-xl mb-3 '>Имя прихода: <span className=' text-red-500'>{currentOrder.title}</span></h4>
+                <h4 className='text-xl mb-5 pb-3 border-dotted border-b-2  '>Описание прихода: <span className=' italic font-normal'>{currentOrder.description}</span></h4>
+                <h4 className='text-xl mb-3 text-center'>Продукты:</h4>
+
+            </div>
+            
             <div>
-                {currentOrder.products.length > 0?
-                currentOrder.products.map((productData: Product, index: number)=><VerySmallProductItem key={index} product={productData}/>):
+                {relatedProducts.length > 0?
+                relatedProducts.map((productData: Product, index: number)=><VerySmallProductItem key={index} product={productData}/>):
                 <p className='text-xl font-semibold text-center mb-5 border-y-1 border-gray-200 py-2'>У этого прихода нет продуктов</p>
             }
             </div> 
