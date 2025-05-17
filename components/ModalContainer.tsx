@@ -4,16 +4,16 @@ import { createPortal } from "react-dom"
 import AddProductForm from "./forms/AddProductForm";
 import AddOrderForm from './forms/AddOrderForm';
 import DeleteOrder from "./forms/DeleteOrder";
+import DeleteProduct from "./forms/DeleteProduct";
 
 //Этот элемент содержит всю логику работу модальных оконо для удаления и добавления продуктов и приходов. 
 //На все кнопки установлен один универсальный обработчик, что ловит всплывшее нажатие по кнопке в элементе document 
-//На каждой кнопке, связанной с работой с приходом или продуктом есть атрибут data-modal и data-delete-id, благодаря которым универсальный обработчик понимает, что и с чем надо сделать
+//На каждой кнопке, связанной с работой с приходом или продуктом есть атрибут data-modal, data-orderid и data-delete-id, благодаря которым универсальный обработчик понимает, что и с чем надо сделать
 //Эти кнопки находятся в элементах Orders, OrderItem, SmallProductItem и др. подобных компонентах
 export default function ModalContainer(): React.JSX.Element | null {
     
     const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
     const [currentContent, setCurrentContent] = useState<React.JSX.Element | null>(null);
-
     const handleModalButtonClick = (event: MouseEvent): void => {
 
         let targetEvent: HTMLElement | null = null;
@@ -26,13 +26,13 @@ export default function ModalContainer(): React.JSX.Element | null {
                         setCurrentContent(<AddOrderForm setCurrentContent={setCurrentContent}/>);
                         break;
                     case 'open-add-product':
-                        setCurrentContent(<AddProductForm/>);
+                        setCurrentContent(<AddProductForm setCurrentContent={setCurrentContent} orderId={targetEvent.dataset.orderid}/>);
                         break;
                     case 'open-delete-order':
                         setCurrentContent(<DeleteOrder orderId={targetEvent.dataset.orderid}/>);
                         break;
                     case 'open-delete-product':
-                        setCurrentContent(null);
+                        setCurrentContent(<DeleteProduct productId={targetEvent.dataset.productid}/>);
                         break;
                     case 'close':
                         setCurrentContent(null);

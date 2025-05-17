@@ -1,6 +1,7 @@
 'use client'
-import type { OrderDataContainer } from '@/utils/types';
+import type { OrderDataContainer, Product } from '@/utils/types';
 import { getProductWordWithCorrectEnding, getDateFromString} from '@/utils/utilFunctions';
+import { useAppSelector } from '@/redux/typedReduxHooks';
 
 
 
@@ -10,7 +11,7 @@ export default function OrderItem({ order,  currencyState, isOpenedData, openedO
     const { isDetailsOpened, setIsDetailsOpened } = isOpenedData;
     const { openedOrderId, setOpenedOrderId } = openedOrderData;
     const currencyRateUa: number = currencyState.usdToUa;
-    const currencyStatus: string = currencyState.status;
+    const fetchingCurrencyStatus: string = currencyState.status;
     
 
     const onOpenDetailsClick = (): void => {
@@ -23,10 +24,10 @@ export default function OrderItem({ order,  currencyState, isOpenedData, openedO
         }
     };
 
-
-    const totalPrice = order.products.reduce((acc, product)=> acc + product.price[0].value, 0);
+    const relatedProducts: Product[] = useAppSelector(state=>state.ordersData.products.filter((product: Product)=>product.order===order.id));
+    const totalPrice = relatedProducts.reduce((acc, product)=> acc + product.price[0].value, 0);
     const totalPriceUA: string = (totalPrice*currencyRateUa).toFixed(2)
-    const numberOfProducts: number = order.products.length;
+    const numberOfProducts: number = relatedProducts.length;
     const productsWord: string = getProductWordWithCorrectEnding(numberOfProducts);
     const dateObject: {full: string, short: string} = getDateFromString(order.date)
 
@@ -48,10 +49,10 @@ export default function OrderItem({ order,  currencyState, isOpenedData, openedO
                         <br />
                         <span className='font-semibold '>{dateObject.full}</span>
                     </p>
-                    <p className={`${isDetailsOpened?'hidden':'block'} w-25 min-w-fit`}> 
+                    <p className={`${isDetailsOpened?'hidden':'block'} w-25`}> 
                         <span className='text-xs '>{totalPrice} $</span>  
                         <br />   
-                        <span className={`font-semibold ${currencyStatus==='loaded'?'opacity-100':'opacity-0'} duration-400`}>{totalPriceUA} <span className='text-xs'>UAH</span></span>
+                        <span className={`font-semibold ${fetchingCurrencyStatus==='loaded'?'opacity-100':'opacity-0'} duration-400`}>{totalPriceUA} <span className='text-xs'>UAH</span></span>
                     </p>
                     <button data-modal='open-delete-order' data-orderid={order.id} className={`${isDetailsOpened?'hidden':'block'} min-w-fit`}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 hover:fill-red-500 duration-200 hover:cursor-pointer ">

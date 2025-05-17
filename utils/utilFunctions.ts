@@ -1,4 +1,4 @@
-import type { Order } from "./types";
+import type { Order, Product, CreateNewProductParams } from "./types";
 import { v4 as uuidv4 } from 'uuid';
 
 export const getTime = (): string => {
@@ -88,6 +88,31 @@ export const createNewOrder = (name: string, date: string, description: string):
         title: name, 
         date, 
         description,
-        products: []
     }
-}
+};
+
+export const createNewProduct = ({serialNumber, isNew, title, type, specification, guarantee, price, order}: CreateNewProductParams): Product  => {
+    
+    return {
+        id: uuidv4(),
+        serialNumber,
+        isNew: isNew==='new',
+        title, 
+        type,
+        specification, 
+        guarantee, 
+        price, 
+        order,
+        date: new Date().toDateString()
+    }
+};   
+
+export const orderIdFinder = (orderName: string, orders: Order[]): string => {
+   const relatedOrder: Order | 'not found' = orders.find((order: Order)=>order.title===orderName)??'not found'; 
+   if(relatedOrder === 'not found'){
+    return relatedOrder;
+   }
+   else{
+    return relatedOrder.id; 
+   }
+};

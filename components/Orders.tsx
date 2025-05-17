@@ -14,7 +14,7 @@ export default function Orders(): React.JSX.Element {
     const ordersState = useAppSelector(state => state.ordersData);
     const ordersQuantity: number = ordersState.orders.length;
     const currencyState: CurrencyState = useAppSelector(state => state.currencyRate);
-
+    
 
     const currentOrderInfo: Order|null = ordersState.orders.find((order: Order)=>order.id===openedOrderId)??null;
     const relatedProducts: Product[] = ordersState.products.filter((product: Product)=>openedOrderId===product.order);
@@ -24,7 +24,7 @@ export default function Orders(): React.JSX.Element {
     };
     
 
-    
+     
     return (
         <>
             <div className='flex items-center mb-15'>
@@ -44,7 +44,7 @@ export default function Orders(): React.JSX.Element {
                             <>  
                                 <div className='p-5 absolute w-full top-0 '>
                                     <h3 className='text-2xl font-bold mb-5'>{currentOrderInfo.title}</h3>
-                                    <button data-modal='open-add-product' className='hover:cursor-pointer flex items-center text-lime-500 font-semibold mb-3'>
+                                    <button data-modal='open-add-product' data-orderid={currentOrderInfo.id} className='hover:cursor-pointer flex items-center text-lime-500 font-semibold mb-3'>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className = 'size-4 bg-lime-500 rounded-full p-0.5 fill-white mr-2 '>
                                             <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/>
                                         </svg>

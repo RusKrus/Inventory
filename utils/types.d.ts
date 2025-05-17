@@ -10,9 +10,11 @@ export type Product = {
         start: string,
         end: string
     },
-    price: [
-        {value: number, symbol: 'USD'|'UAH'},
-    ],
+    price: 
+        {
+            value: number, 
+            symbol: 'USD'|'UAH'
+        }[],
     order: string,
     date: string
 };
@@ -22,6 +24,10 @@ export type Order = {
     title: string,
     date: string,
     description: string,
+};
+
+export type RequestedData = {
+    orders: Order[], 
     products: Product[]
 };
 
@@ -47,7 +53,7 @@ export type CurrencyState = {
     status: 'initial' | 'loading' | 'loaded' | 'rejected'
 };
 
-//components props types
+//components types
 export type OrderDataContainer = {
     order: Order, 
     currencyState: CurrencyState,
@@ -80,9 +86,37 @@ export type DeleteOrderProps = {
     orderId?:string
 }
 
-export type AddProductFormProps = {
+export type DeleteProductProps = {
+    productId?: string;
+}
+
+export type AddOrderFormProps = {
     setCurrentContent: function
 }
+
+export type AddProductFormProps = {
+    orderId?:string,
+    setCurrentContent: function
+}
+
+export type FormInitialState = {
+    serialNumber: string,
+    isNew: string,
+    title: string,
+    type: string,
+    specification: string,
+    guarantee: {
+        start: string,
+        end: string
+    },
+    price: {
+        value: number, 
+        symbol: 'USD'|'UAH'
+    }[],
+    order: string,
+};
+
+
 
 // actions types
 export type checkNewOrderActionState = { 
@@ -92,4 +126,21 @@ export type checkNewOrderActionState = {
     
 };  
 
+export type CheckNewProductValidatorParams = {
+    newProductSerialNumber: string, 
+    newProductOrderId: string,
+    orderIds: string[],
+    products: Product[]
+};
+
+export type CheckNewOrderErrors = {
+    serialNumberError?: string,
+    orderId?: string
+};
+
+export type CheckNewOrderAnswer = {
+    status: 'error' | 'ok', 
+    errors: CheckNewOrderErrors
+};
 //other types
+export type CreateNewProductParams = FormInitialState; 

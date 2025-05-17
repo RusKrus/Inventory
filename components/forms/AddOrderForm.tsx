@@ -4,9 +4,9 @@ import { addOrder } from '@/redux/ordersSlice';
 import { useActionState, useEffect } from 'react';
 import { createNewOrder } from '@/utils/utilFunctions';
 import { useAppDispatch } from '@/redux/typedReduxHooks';
-import type { AddProductFormProps } from '@/utils/types'; 
+import type { AddOrderFormProps } from '@/utils/types'; 
 
-export default function AddProductForm({setCurrentContent}: AddProductFormProps): React.JSX.Element {
+export default function AddProductForm({setCurrentContent}: AddOrderFormProps): React.JSX.Element {
 
     const [formState, orderValidatorObserved, pending] = useActionState(createdOrderValidator, {success: 'idle', errors: {}, obtainedFormData: {} });
     const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ export default function AddProductForm({setCurrentContent}: AddProductFormProps)
                 setCurrentContent(null);
             };
         }
-    }, []);
+    }, [formState]);
 
 
     return (
