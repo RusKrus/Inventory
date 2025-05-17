@@ -1,7 +1,7 @@
 //fetching types
 export type Product = {
-    id: string|number,
-    serialNumber: string|number,
+    id: string,
+    serialNumber: string,
     isNew: boolean,
     title: string,
     type: string,
@@ -13,24 +13,33 @@ export type Product = {
     price: [
         {value: number, symbol: 'USD'|'UAH'},
     ],
-    order: string|number,
+    order: string,
     date: string
 };
 
 export type Order = {
-    id: string|number,
+    id: string,
     title: string,
     date: string,
     description: string,
     products: Product[]
 };
 
+export type Currency = {
+    [key: string]: string|number,
+    rates: {
+        [key: string]: number,
+        UAH: number
+    }
+}
+
 
 //slice types
 export type OrdersState = {
     status: 'initial' | 'loading' | 'loaded' | 'rejected' | 'updated' | 'restored',
     orders: Order[], 
-    products: Product[]
+    products: Product[], 
+    productTypes: string[]
 };
 
 export type CurrencyState = {
@@ -38,13 +47,12 @@ export type CurrencyState = {
     status: 'initial' | 'loading' | 'loaded' | 'rejected'
 };
 
-//components types
+//components props types
 export type OrderDataContainer = {
-    dispatch: function,
     order: Order, 
     currencyState: CurrencyState,
     isOpenedData:{isDetailsOpened: boolean, setIsDetailsOpened: function },
-    openedOrderData:{openedOrderId: number | null, setOpenedOrderId: function},
+    openedOrderData:{openedOrderId: string | null, setOpenedOrderId: function},
 };
 
 export type ProductDataContainer = {
@@ -68,6 +76,14 @@ export type ErrorProps = {
     reset: () => void;
 }
 
+export type DeleteOrderProps = {
+    orderId?:string
+}
+
+export type AddProductFormProps = {
+    setCurrentContent: function
+}
+
 // actions types
 export type checkNewOrderActionState = { 
     success: 'idle'| boolean, 
@@ -76,3 +92,4 @@ export type checkNewOrderActionState = {
     
 };  
 
+//other types

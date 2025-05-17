@@ -6,6 +6,8 @@ import Link from 'next/link';
 import ded from '@/public/ded.jpg';
 import Menu from '@/components/Menu';
 import NextProvider from '@/redux/NextProvider'; 
+import ModalContainer from "@/components/ModalContainer";
+
 
 
 export default function RootLayout({
@@ -34,7 +36,7 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <main className='h-9/10 grid grid-cols-[2fr_13fr] bg-gray-100'>
+        <main className='h-9/10 grid grid-cols-[2fr_13fr] bg-gray-100' id='modal-root'>
           <nav className='h-full bg-white shadow-[0_5px_10px] shadow-gray-400 pt-10 space-y-20 min-w-fit px-5 relative z-10'>
             <div>
               <figure className='w-30 h-30 mx-auto relative'> 
@@ -55,8 +57,10 @@ export default function RootLayout({
             </div> 
             <Menu/>
           </nav>
+          
           <NextProvider>
             <section className='p-20 overflow-scroll '>
+              <ModalContainer/>
               {children}
             </section>
           </NextProvider>

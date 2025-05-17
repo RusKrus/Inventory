@@ -7,12 +7,13 @@ import Image from 'next/image';
 export default function ProductItem({orders, product, currencyState}: ProductDataContainer): React.JSX.Element{
 
     const price: number = product.price[0].value;
+    const currencyRateUa: number = currencyState.usdToUa;
+    const priceUA: string = (price*currencyRateUa).toFixed(2)
     const relatedOrder: Order | undefined = orders.find((order: Order)=>order.id===product.order);
     const orderName = relatedOrder?.title ?? 'Приход не найден';
     const src: string = getCorrectProductImage(product.type);
     const guaranteeStart: {full: string, short: string} = getDateFromString(product.guarantee.start);
     const guaranteeEnd: {full: string, short: string} = getDateFromString(product.guarantee.end);
-    const currencyRateUa: number = currencyState.usdToUa;
     const currencyStatus: string = currencyState.status;
 
 
@@ -54,7 +55,7 @@ export default function ProductItem({orders, product, currencyState}: ProductDat
             <p className='min-w-fit w-40'> 
                 <span className='text-xs color-gray-400'>{price} $</span>  
                 <br /> 
-                <span className={`font-semibold ${currencyStatus==='loaded'?'opacity-100':'opacity-0'} duration-400`}>{price*currencyRateUa} <span className='text-xs'>UAH</span></span>
+                <span className={`font-semibold ${currencyStatus==='loaded'?'opacity-100':'opacity-0'} duration-400`}>{priceUA} <span className='text-xs'>UAH</span></span>
             </p>
             <p className='min-w-fit w-50 underline underline-offset-4 decoration-gray-300 decoration-2 font-semibold'>{orderName}</p>
             <button className='w-fit'>

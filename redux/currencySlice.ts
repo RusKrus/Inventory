@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { getUaToUsdRate } from "@/utils/fetching";
+import { getUaToUsdRate } from "@/fetching/fetchingCurrency";
 import type { CurrencyState } from "@/utils/types";
 export const fetchingCurrency = createAsyncThunk(
     'currency/fetchingCurrency', 
