@@ -3,13 +3,16 @@ import { Product, Order } from '@/utils/types';
 import { removeOrder } from '@/redux/ordersSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/typedReduxHooks';
 import type { DeleteOrderProps } from '@/utils/types';
+import { getOrderById, getRelatedProducts } from '@/redux/selectors';
 
 
 export default function DeleteOrder({orderId}: DeleteOrderProps): React.JSX.Element {
 
     const dispatch = useAppDispatch();
-    const currentOrder: Order | string = useAppSelector(state=>state.ordersData.orders.find((order: Order)=>order.id === orderId))??'Приход по такому id не найден!';
-    const relatedProducts: Product[] = useAppSelector(state=>state.ordersData.products.filter((product: Product)=>product.order===orderId));
+
+    const currentOrder: Order | string = useAppSelector(state=>getOrderById(state, orderId));
+    const relatedProducts: Product[] = useAppSelector(state=>getRelatedProducts(state, orderId));
+    
     const handleDeleteOrder = (): void => {
         if(orderId){
             dispatch(removeOrder({orderId}));

@@ -2,14 +2,16 @@ import { DeleteProductProps, Product, Order } from "@/utils/types";
 import { useAppDispatch, useAppSelector } from "@/redux/typedReduxHooks";
 import { removeProduct } from "@/redux/ordersSlice";
 import VerySmallProductItem from '@/components/VerySmallProductItem';
+import { getProductById, getOrderById, getUsdToUaRate } from '@/redux/selectors';
 
 export default function DeleteProduct({productId}: DeleteProductProps): React.JSX.Element {
 
     const dispatch = useAppDispatch();
-    const currentProduct: Product | string = useAppSelector(state=>state.ordersData.products.find((product: Product)=>product.id===productId))??'Продукт с таким id не найден!';
+
+    const currentProduct: Product | string = useAppSelector(state=>getProductById(state, productId));
     const relatedOrderId: string = (typeof currentProduct==='string')?'Продукт с таким id не найден!':currentProduct.order;
-    const relatedOrder: Order | string = useAppSelector(state=>state.ordersData.orders.find((order: Order)=>order.id===relatedOrderId))??'Соответствующий приход с таким id не найден!';
-    const usdToUa: number = useAppSelector(state=>state.currencyRate.usdToUa);
+    const relatedOrder: Order | string = useAppSelector(state=>getOrderById(state, relatedOrderId));
+    const usdToUa: number = useAppSelector(getUsdToUaRate);
     const handleDeleteProduct = (): void => {
         if(productId){
             dispatch(removeProduct({productId}));
