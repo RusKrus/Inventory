@@ -7,6 +7,7 @@ import ded from '@/public/ded.jpg';
 import Menu from '@/components/Menu';
 import NextProvider from '@/redux/NextProvider'; 
 import ModalContainer from "@/components/ModalContainer";
+import { Suspense } from 'react';
 
 
 
@@ -48,10 +49,11 @@ export default function RootLayout({
               <h1 className='text-lg font-bold text-lime-600 uppercase'>Inventory</h1>
             </div>
             <input type="find" className='rounded-lg bg-gray-200 inset-shadow-sm inset-shadow-gray-400 w-1/4 p-1 placeholder:font-semibold border-none' placeholder='Search...'/>
-            <div className='flex flex-wrap flex-col'>
-              <Clock/>
-
-            </div>
+            <Suspense >
+              <div className='flex flex-wrap flex-col'>
+                <Clock/>
+              </div>
+            </Suspense>
           </div>
         </header>
         <main className='h-9/10 grid grid-cols-[2fr_13fr] bg-gray-100' id='modal-root'>
@@ -73,13 +75,12 @@ export default function RootLayout({
             </div> 
             <Menu/>
           </nav>
-          
-          <NextProvider>
-            <section className='p-20 overflow-scroll '>
-              <ModalContainer/>
-              {children}
-            </section>
-          </NextProvider>
+              <NextProvider>
+                <section className='p-20 overflow-scroll '>
+                  <ModalContainer/>
+                  {children}
+                </section>
+            </NextProvider>
         </main>
       </body>
     </html>

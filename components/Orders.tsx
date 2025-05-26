@@ -39,31 +39,30 @@ export default function Orders(): React.JSX.Element {
                 <div className={`space-y-2 `}>
                     {ordersState.orders.map((order: Order, index: number)=><OrderItem key={index} order={order} currencyState={currencyState}  isOpenedData={{isDetailsOpened, setIsDetailsOpened}} openedOrderData={{openedOrderId, setOpenedOrderId}} />)}
                 </div>
-                    <div className={`${(isDetailsOpened)?'block':'hidden'} border-gray-300 border-2 rounded-md bg-white relative max-h-fit `}>
-                        {currentOrderInfo!==null?
-                            <>  
-                                <div className='p-5 absolute w-full top-0 '>
-                                    <h3 className='text-2xl font-bold mb-5'>{currentOrderInfo.title}</h3>
-                                    <button data-modal='open-add-product' data-orderid={currentOrderInfo.id} className='hover:cursor-pointer flex items-center text-lime-500 font-semibold mb-3'>
-                                        <svg viewBox="0 0 448 512" className = 'size-4 bg-lime-500 rounded-full p-0.5 fill-white mr-2 '>
-                                            <use href='#plus'/> 
-                                        </svg>
-                                        Добавить продукт
-                                    </button>
-                                </div>
-                                <div className=' mt-32 '>
-                                    {relatedProducts.length>0?
-                                    relatedProducts.map((productInfo: Product, index)=><SmallProductItem key={index}  product={productInfo}/>):
-                                    <p className='text-xl font-semibold text-center mb-5 border-y-1 border-gray-200 py-2'>У этого прихода пока что нет продуктов</p>
-                                    }
-                                </div>
-                            </>: 
-                            <h3 className='text-2xl font-bold mb-5 text-center'>Информация по этому приходу не найдена! <br /><span className='text-lg text-gray-400 font-semibold'>Если проблема не прошла - откройте сайт в новой вкладке</span></h3>
-                        }
-                        <button onClick={handleCloseDetailsButtonClick} className={`text-gray-400 ${(isDetailsOpened)?'inline-block':'hidden'} bg-white absolute -top-5 -right-5 size-8 rounded-full  shadow-[0_0_5px_2px] shadow-gray-400 hover:cursor-pointer hover:text-red-500 hover:font-bold`}>X</button>
-                    </div>
+                <div className={`${(isDetailsOpened)?'block':'hidden'} border-gray-300 border-2 rounded-md bg-white relative max-h-fit `}>
+                    {currentOrderInfo!==null?
+                        <>  
+                            <div className='p-5 absolute w-full top-0 '>
+                                <h3 className='text-2xl font-bold mb-5'>{currentOrderInfo.title}</h3>
+                                <button data-modal='open-add-product' data-orderid={currentOrderInfo.id} className='hover:cursor-pointer flex items-center text-lime-500 font-semibold mb-3'>
+                                    <svg viewBox="0 0 448 512" className = 'size-4 bg-lime-500 rounded-full p-0.5 fill-white mr-2 '>
+                                        <use href='#plus'/> 
+                                    </svg>
+                                    Добавить продукт
+                                </button>
+                            </div>
+                            <div className=' mt-32 '>
+                                {relatedProducts.length>0?
+                                relatedProducts.map((productInfo: Product, index)=><SmallProductItem key={index}  product={productInfo}/>):
+                                <p className='text-xl font-semibold text-center mb-5 border-y-1 border-gray-200 py-2'>У этого прихода пока что нет продуктов</p>
+                                }
+                            </div>
+                        </>: 
+                        <h3 className='text-2xl font-bold mb-5 text-center'>Информация по этому приходу не найдена! <br /><span className='text-lg text-gray-400 font-semibold'>Если проблема не прошла - откройте сайт в новой вкладке</span></h3>
+                    }
+                    <button onClick={handleCloseDetailsButtonClick} className={`text-gray-400 ${(isDetailsOpened)?'inline-block':'hidden'} bg-white absolute -top-5 -right-5 size-8 rounded-full  shadow-[0_0_5px_2px] shadow-gray-400 hover:cursor-pointer hover:text-red-500 hover:font-bold`}>X</button>
                 </div>
-
+            </div>
         </>
     )
 }
