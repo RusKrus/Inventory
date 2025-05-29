@@ -3,19 +3,20 @@
 import type { ProductDataContainer, Order } from '@/utils/types';
 import { getCorrectProductImage, getDateFromString } from '@/utils/utilFunctions';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductItem({orders, product, currencyState}: ProductDataContainer): React.JSX.Element{
+    const { t } = useTranslation(["products", "product_item"]);
 
     const price: number = product.price[0].value;
     const currencyRateUa: number = currencyState.usdToUa;
-    const priceUA: string = (price*currencyRateUa).toFixed(2)
+    const priceUA: string = (price*currencyRateUa).toFixed(2);
     const relatedOrder: Order | undefined = orders.find((order: Order)=>order.id===product.order);
     const orderName = relatedOrder?.title ?? 'Приход не найден';
     const src: string = getCorrectProductImage(product.type);
     const guaranteeStart: {full: string, short: string} = getDateFromString(product.guarantee.start);
     const guaranteeEnd: {full: string, short: string} = getDateFromString(product.guarantee.end);
     const currencyStatus: string = currencyState.status;
-
 
 
     return(
@@ -31,10 +32,10 @@ export default function ProductItem({orders, product, currencyState}: ProductDat
                 <br />
                 <span className=' text-gray-400 text-sm'>SN: {product.serialNumber}</span>
             </p>
-            <p className='min-w-fit w-40'>{product.type}</p>
+            <p className='min-w-fit w-40'>{t(product.type)}</p>
             <div className='min-w-fit w-50 font-semibold'>
                 <p className='flex items-center w-fit border-b-1 border-gray-500'>
-                    <span className='mr-5 text-sm text-gray-400 '>с</span>
+                    <span className='mr-5 text-sm text-gray-400 '>{t("product_item:from")}</span>
                     <span className='text-center'>
                         <span className='text-xs '>{guaranteeStart.short}</span>
                         <br />
@@ -43,7 +44,7 @@ export default function ProductItem({orders, product, currencyState}: ProductDat
                 </p>
                 
                 <p className='flex items-center w-fit'>
-                    <span className='mr-3 text-sm text-gray-400'>по</span>
+                    <span className='mr-3 text-sm text-gray-400'>{t("product_item:till")}</span>
                     <span className='text-center'>
                         <span className='text-xs '>{guaranteeEnd.short}</span>
                         <br />

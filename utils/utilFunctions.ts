@@ -21,33 +21,20 @@ export const capitalizeFirstLetter = (string: string): string => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const getProductWordWithCorrectEnding = (number: number): string => {
-    const lastDigit: number = number%10;
-    if(lastDigit===1){
-        return 'Продукт';
-    }
-    else if(lastDigit>1&&lastDigit<5){
-        return 'Продукта';
-    }
-    else{
-        return 'Продуктов';
-    };
-};
-
 export const getCorrectProductImage = (type: string): string => {
     let imageUrl: string;
     
     switch(type){
-        case 'Гарнитура':
+        case 'headphones':
             imageUrl = '/ProductsPhoto/headphones.png';
             break;
-        case 'Мышь':
+        case 'mouse':
             imageUrl = '/ProductsPhoto/mouse.png';
             break;
-        case 'Клавиатура':
+        case 'keyboard':
             imageUrl = '/ProductsPhoto/keyboard.png';
             break;
-        case 'Монитор':
+        case 'monitor':
             imageUrl = '/ProductsPhoto/monitor.png';
             break;
         default:

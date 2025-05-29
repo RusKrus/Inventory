@@ -5,11 +5,7 @@
 import dynamic from 'next/dynamic';
 const Orders = dynamic(() => import('@/components/Orders'), { ssr: false}); 
 
-
-
 export default function OrdersPage(): React.JSX.Element {
-
-    return (
-        <Orders/>
-    )
+    
+    return <Orders/>
 };

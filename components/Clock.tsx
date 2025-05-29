@@ -29,11 +29,11 @@ export default function Clock(): React.JSX.Element {
             clearInterval(dayTimer);
             clearInterval(dateTimer);
         };
-    }, []);
+    }, [i18n.language]);
 
     return (
         
-        <div className='space-y-2'>
+        <div className='space-y-2 flex flex-wrap flex-col'>
             <h3 className='w-full text-left text-xl font-bold '>{capitalizeFirstLetter(dayOfTheWeek)}</h3>
             <div className='flex w-fit flex-wrap space-x-5 font-semibold'>
                 <p>{date}</p>

@@ -1,4 +1,4 @@
-import "./globals.css";
+import '../globals.css';
 import Clock from '@/components/Clock';
 import Image from 'next/image';
 import logo from '@/public/logo.png';
@@ -6,18 +6,24 @@ import Link from 'next/link';
 import ded from '@/public/ded.jpg';
 import Menu from '@/components/Menu';
 import NextProvider from '@/redux/NextProvider'; 
+import TranslationsProvider from '@/i18n/I18NextWrapper'
 import ModalContainer from "@/components/ModalContainer";
+import LanguageSwitcher from '@/components/LanguageSwithcer';
+import { i18nConfig } from '@/i18n/i18nConfig';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+
+export default async function RootLayout({children, params}: {children: React.ReactNode, params: Promise<{ locale: string }>}) {
+  const { locale } = await params;
+  if (!i18nConfig.locales.includes(locale)) {
+    notFound();
+  }
+  
   return (
-    <html lang="en" className='h-full'>
+    <html lang={locale} className='h-full'>
       <body className=' h-full'>
         <svg xmlns="http://www.w3.org/2000/svg" className='hidden'>
           <symbol id="clock"    strokeWidth={1.5}>
@@ -37,8 +43,7 @@ export default function RootLayout({
             <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/>
           </symbol>
         </svg>
-        <header className='h-2/15 bg-white shadow-[0_0_10px_5px] shadow-gray-400 z-10 relative'>
-          <div className='h-full flex items-center justify-between px-8'>
+        <header className='h-2/15 bg-white shadow-[0_0_10px_5px] shadow-gray-400 z-10 relative flex items-center justify-between px-8'>
             <div className='flex items-center'>
               <Image
                 src={logo}
@@ -50,37 +55,37 @@ export default function RootLayout({
             </div>
             <input type="find" className='rounded-lg bg-gray-200 inset-shadow-sm inset-shadow-gray-400 w-1/4 p-1 placeholder:font-semibold border-none' placeholder='Search...'/>
             <Suspense >
-              <div className='flex flex-wrap flex-col'>
-                <Clock/>
-              </div>
+              <Clock/>
+              <LanguageSwitcher/>
             </Suspense>
-          </div>
         </header>
         <main className='h-9/10 grid grid-cols-[2fr_13fr] bg-gray-100' id='modal-root'>
-          <nav className='h-full bg-white shadow-[0_5px_10px] shadow-gray-400 pt-10 space-y-20 min-w-fit px-5 relative z-10'>
-            <div>
-              <figure className='w-30 h-30 mx-auto relative'> 
-                  <Image 
-                    src={ded}
-                    alt='Очень довольный мужчина'
-                    fill
-                    className='rounded-full'
-                  />
-                  <Link href='/settings'>
-                    <svg viewBox="0 0 24 24" strokeWidth={1.5}  className="fill-gray-600 size-10 absolute bg-white rounded-full ring-gray-300/50 ring-2 p-2 bottom-0 right-0 cursor-pointer stroke-gray-600 hover:animate-spin  ">
-                      <use href='#settings'></use>
-                    </svg>
-                  </Link>
-              </figure>
-            </div> 
-            <Menu/>
-          </nav>
-              <NextProvider>
+          <TranslationsProvider locale={locale}>
+            <NextProvider>
+              <Suspense>
+                <nav className='h-full bg-white shadow-[0_5px_10px] shadow-gray-400 pt-10 space-y-20 min-w-fit px-5 relative z-10'>
+                    <figure className='w-30 h-30 mx-auto relative'> 
+                        <Image 
+                          src={ded}
+                          alt='Очень довольный мужчина'
+                          fill
+                          className='rounded-full'
+                        />
+                        <Link href='/settings'>
+                          <svg viewBox="0 0 24 24" strokeWidth={1.5}  className="fill-gray-600 size-10 absolute bg-white rounded-full ring-gray-300/50 ring-2 p-2 bottom-0 right-0 cursor-pointer stroke-gray-600 hover:animate-spin  ">
+                            <use href='#settings'></use>
+                          </svg>
+                        </Link>
+                    </figure>
+                  <Menu/>
+                </nav>
                 <section className='p-20 overflow-scroll '>
                   <ModalContainer/>
                   {children}
                 </section>
+              </Suspense>
             </NextProvider>
+          </TranslationsProvider>
         </main>
       </body>
     </html>

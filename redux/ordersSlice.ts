@@ -15,7 +15,7 @@ const initialState: OrdersState = {
     status: 'initial',
     orders: [],
     products: [],
-    productTypes: ['Клавиатура', 'Гарнитура', 'Мышь', 'Монитор', 'Другое']
+    productTypes: ['keyboard', 'headphones', 'mouse', 'monitor', 'other']
 };
 
 const ordersSlice = createSlice({

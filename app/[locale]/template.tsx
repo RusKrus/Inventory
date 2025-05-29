@@ -5,7 +5,6 @@ import { fetchingOrders, setDataFromSessionStorage } from '@/redux/ordersSlice';
 import { useEffect } from 'react';
 import { fetchingCurrency } from '@/redux/currencySlice';
 import type { Order, Product } from '@/utils/types';
-import '@/utils/i18n';
 
 export default function Template({ children }: { children: React.ReactNode }) {
     const dispatch = useAppDispatch();

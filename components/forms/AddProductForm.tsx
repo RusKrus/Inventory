@@ -34,7 +34,7 @@ export default function AddProductForm({orderId, setCurrentContent}: AddProductF
 
     return (
         <>
-            <h3 className='font-bold text-xl p-5 rounded-t-md bg-lime-600/90 text-white'>Создание нового прихода</h3>
+            <h3 className='font-bold text-xl p-5 rounded-t-md bg-lime-600/90 text-white'>Создание нового продукта</h3>
             <Formik 
                 initialValues = {initialValues}
                 validationSchema={Yup.object({
