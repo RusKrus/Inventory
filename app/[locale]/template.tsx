@@ -54,5 +54,5 @@ export default function Template({ children }: { children: React.ReactNode }) {
         
     }, [ordersState.status, ordersState.products]);
 
-    return <div>{children}</div>
+    return <>{children}</>
   }

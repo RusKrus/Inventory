@@ -3,9 +3,11 @@ import {  useAppSelector } from '@/redux/typedReduxHooks';
 import { useState } from 'react';
 import ProductItem from './ProductItem';
 import type { Product, CurrencyState } from '@/utils/types';
+import { useTranslation } from 'react-i18next'; 
 
 export default function Products(): React.JSX.Element{
-    
+    const { t } = useTranslation("products");
+
     const ordersState = useAppSelector(state => state.ordersData);
     const productsQuantity: number = ordersState.products.length;
     const currencyState: CurrencyState  = useAppSelector(state => state.currencyRate);
@@ -20,12 +22,12 @@ export default function Products(): React.JSX.Element{
     return (
         <>
             <div className='flex items-center mb-15 space-x-20'>
-                <h2 className='font-bold text-3xl '>Продукты / {productsQuantity}</h2>
+                <h2 className='font-bold text-3xl '>{t("products", {number: productsQuantity})}</h2>
                 <div>
                     <label htmlFor='type' className='mr-5'>Тип:</label>
                     <select id='type' name='type' onChange={handleSelectChange} value={filterValue} className='select-field'>
-                        {Array.from(productTypes).map((type: string, index: number) => <option key={index} value={type}>{type}</option>)}
-                        <option value=''>Все</option>
+                        {productTypes.map((type: string, index: number) => <option key={index} value={type}>{t(type)}</option>)}
+                        <option value=''>{t("all")}</option>
                     </select>
                 </div>
                 

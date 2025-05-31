@@ -1,10 +1,11 @@
 'use client' 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { createPortal } from "react-dom"
 import AddProductForm from "./forms/AddProductForm";
 import AddOrderForm from './forms/AddOrderForm';
 import DeleteOrder from "./forms/DeleteOrder";
 import DeleteProduct from "./forms/DeleteProduct";
+import FallbackForm from "./forms/FallbackForm";
 
 //Этот элемент содержит всю логику работу модальных оконо для удаления и добавления продуктов и приходов. 
 //На все кнопки установлен один универсальный обработчик, что ловит всплывшее нажатие по кнопке в элементе document 
@@ -14,25 +15,30 @@ export default function ModalContainer(): React.JSX.Element | null {
     
     const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
     const [currentContent, setCurrentContent] = useState<React.JSX.Element | null>(null);
-    const handleModalButtonClick = (event: MouseEvent): void => {
+    const [formType, setFormType] = useState<string>('')
 
+    const handleModalButtonClick = (event: MouseEvent): void => {
         let targetEvent: HTMLElement | null = null;
         if(event.target instanceof Element){
             targetEvent = event.target.closest('[data-modal]');
             if(targetEvent instanceof HTMLButtonElement){
-
+                
                 switch (targetEvent.dataset.modal){
                     case 'open-add-order':
-                        setCurrentContent(<AddOrderForm setCurrentContent={setCurrentContent}/>);
+                        setCurrentContent(<AddOrderForm setCurrentContent={setCurrentContent} />);
+                        setFormType('add');
                         break;
                     case 'open-add-product':
-                        setCurrentContent(<AddProductForm setCurrentContent={setCurrentContent} orderId={targetEvent.dataset.orderid}/>);
+                        setCurrentContent(<AddProductForm setCurrentContent={setCurrentContent} orderId={targetEvent.dataset.orderid} />);
+                        setFormType('add');
                         break;
                     case 'open-delete-order':
-                        setCurrentContent(<DeleteOrder orderId={targetEvent.dataset.orderid}/>);
+                        setCurrentContent(<DeleteOrder orderId={targetEvent.dataset.orderid} />);
+                        setFormType('delete');
                         break;
                     case 'open-delete-product':
-                        setCurrentContent(<DeleteProduct productId={targetEvent.dataset.productid}/>);
+                        setCurrentContent(<DeleteProduct productId={targetEvent.dataset.productid} />);
+                        setFormType('delete');
                         break;
                     case 'close':
                         setCurrentContent(null);
@@ -70,7 +76,9 @@ export default function ModalContainer(): React.JSX.Element | null {
         (
             <div className={`modal-backdrop ${currentContent?'duration-200':'invisible '} ` } >
                 <div className={`modal-container ${currentContent?'opacity-100 duration-200':'opacity-0'}`}>
-                    {currentContent}
+                    <Suspense fallback={<FallbackForm formType={formType}/>}>
+                        {currentContent}
+                    </Suspense>
                     <button data-modal='close' className='text-gray-400 bg-white absolute -top-5 -right-5 size-8 rounded-full  shadow-[0_0_5px_2px] shadow-gray-400 hover:cursor-pointer hover:text-red-500 hover:font-bold'>X</button>
                 </div>
             </div>

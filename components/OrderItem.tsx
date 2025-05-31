@@ -1,12 +1,14 @@
 'use client'
 import type { OrderDataContainer, Product } from '@/utils/types';
-import { getProductWordWithCorrectEnding, getDateFromString} from '@/utils/utilFunctions';
+import {  getDateFromString} from '@/utils/utilFunctions';
 import { useAppSelector } from '@/redux/typedReduxHooks';
+import { useTranslation } from 'react-i18next';
 
 
 
 
 export default function OrderItem({ order,  currencyState, isOpenedData, openedOrderData}: OrderDataContainer): React.JSX.Element {
+    const { t } = useTranslation("order_item");
 
     const { isDetailsOpened, setIsDetailsOpened } = isOpenedData;
     const { openedOrderId, setOpenedOrderId } = openedOrderData;
@@ -26,9 +28,8 @@ export default function OrderItem({ order,  currencyState, isOpenedData, openedO
 
     const relatedProducts: Product[] = useAppSelector(state=>state.ordersData.products.filter((product: Product)=>product.order===order.id));
     const totalPrice = relatedProducts.reduce((acc, product)=> acc + product.price[0].value, 0);
-    const totalPriceUA: string = (totalPrice*currencyRateUa).toFixed(2)
+    const totalPriceUA: string = (totalPrice*currencyRateUa).toFixed(2);
     const numberOfProducts: number = relatedProducts.length;
-    const productsWord: string = getProductWordWithCorrectEnding(numberOfProducts);
     const dateObject: {full: string, short: string} = getDateFromString(order.date)
 
     return(
@@ -41,7 +42,7 @@ export default function OrderItem({ order,  currencyState, isOpenedData, openedO
                             </svg>
                         </button>
                         <p>
-                            <span className='font-semibold text-xl'>{numberOfProducts}</span> <br /> <span className='text-sm text-gray-400'>{productsWord}</span>
+                            <span className='font-semibold text-xl'>{numberOfProducts}</span> <br /> <span className='text-sm text-gray-400'>{t("product_count", { count: numberOfProducts })}</span>
                         </p>
                     </div>
                     <p className='text-lg font-semibold text-center w-50 min-w-fit'>

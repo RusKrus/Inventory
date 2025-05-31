@@ -28,7 +28,7 @@ export const mockedProducts: Product[] = [
         serialNumber: '1111',
         isNew: true,
         title: 'Монитор 1',
-        type: 'Монитор',
+        type: 'monitor',
         specification: 'Описания монитора 1',
         guarantee: {
             start: '2018-03-29 ',
@@ -45,7 +45,7 @@ export const mockedProducts: Product[] = [
         serialNumber: '1112',
         isNew: false,
         title: 'Монитор 2',
-        type: 'Монитор',
+        type: 'monitor',
         specification: 'Описания монитора 2',
         guarantee: {
             start: '2018-03-29 ',
@@ -62,7 +62,7 @@ export const mockedProducts: Product[] = [
         serialNumber: '1113',
         isNew: false,
         title: 'Клавиатура 1',
-        type: 'Клавиатура',
+        type: 'keyboard',
         specification: 'Описания клавиатуры 1',
         guarantee: {
             start: '2015-02-29 ',
@@ -79,7 +79,7 @@ export const mockedProducts: Product[] = [
         serialNumber: '1114',
         isNew: false,
         title: 'Клавиатура 2',
-        type: 'Монитор',
+        type: 'monitor',
         specification: 'Описания клавиатуры 2',
         guarantee: {
             start: '2012-03-29 ',
@@ -96,7 +96,7 @@ export const mockedProducts: Product[] = [
         serialNumber: '1115',
         isNew: true,
         title: 'Мышь 1',
-        type: 'Мышь',
+        type: 'mouse',
         specification: 'Описания мыши 1',
         guarantee: {
             start: '2019-06-29 ',
@@ -114,7 +114,7 @@ export const mockedProducts: Product[] = [
         isNew: true,
 
         title: 'Мышь 2',
-        type: 'Мышь',
+        type: 'mouse',
         specification: 'Описания мыши 2',
         guarantee: {
             start: '2011-02-29 ',
@@ -131,7 +131,7 @@ export const mockedProducts: Product[] = [
         serialNumber: '1118',
         isNew: true,
         title: 'Гарнитура 1',
-        type: 'Гарнитура',
+        type: 'headphones',
         specification: 'Описания наушников 1',
         guarantee: {
             start: '2013-02-29 ',
@@ -148,7 +148,7 @@ export const mockedProducts: Product[] = [
         serialNumber: '1116',
         isNew: true,
         title: 'Наушники 2',
-        type: 'Гарнитура',
+        type: 'headphones',
         specification: 'Описания наушников 2',
         guarantee: {
             start: '2016-04-29 ',

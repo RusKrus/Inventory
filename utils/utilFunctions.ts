@@ -10,49 +10,31 @@ export const getTime = (): string => {
     return `${hours}:${minutes}`;
 };
 
-export const getDayOfTheWeek = (): string => {
-    const dayOfTheWeekNumber: number = new Date().getDay();
-    const daysOfTheWeek:string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    return daysOfTheWeek[dayOfTheWeekNumber];
+export const timeUntillMidnight = (): number => {
+    const now = Date.now();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0);
+    return midnight.getTime() - now;
 };
 
-export const getDate = (): string => {
-    const dateObject: Date = new Date();
-    const dayOfMonth: number = dateObject.getDate();
-    const monthNumber: number = dateObject.getMonth();
-    const year: number = dateObject.getFullYear();
-    const monthNames: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const month: string = monthNames[monthNumber];
-    return `${dayOfMonth} ${month}, ${year}`;
-};
-
-export const getProductWordWithCorrectEnding = (number: number): string => {
-    const lastDigit: number = number%10;
-    if(lastDigit===1){
-        return 'Продукт';
-    }
-    else if(lastDigit>1&&lastDigit<5){
-        return 'Продукта';
-    }
-    else{
-        return 'Продуктов';
-    };
-};
+export const capitalizeFirstLetter = (string: string): string => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 export const getCorrectProductImage = (type: string): string => {
     let imageUrl: string;
     
     switch(type){
-        case 'Гарнитура':
+        case 'headphones':
             imageUrl = '/ProductsPhoto/headphones.png';
             break;
-        case 'Мышь':
+        case 'mouse':
             imageUrl = '/ProductsPhoto/mouse.png';
             break;
-        case 'Клавиатура':
+        case 'keyboard':
             imageUrl = '/ProductsPhoto/keyboard.png';
             break;
-        case 'Монитор':
+        case 'monitor':
             imageUrl = '/ProductsPhoto/monitor.png';
             break;
         default:

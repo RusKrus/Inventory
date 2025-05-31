@@ -1,8 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 
 
 export default function OnlineCounter(): React.JSX.Element {
+
+    const { t } = useTranslation('counter');
+
     const [counter, setCounter] = useState<string>('0');
 
     useEffect(() => {
@@ -39,6 +44,6 @@ export default function OnlineCounter(): React.JSX.Element {
     }, []);
 
     return (
-        <h2 >Пользователи онлайн: <span className='font-bold text-lime-500'>{counter}</span></h2>
+        <h2>{t("online_users")} <span className='font-bold text-lime-500'>{counter}</span></h2>
     )
 };

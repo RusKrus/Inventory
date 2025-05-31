@@ -1,4 +1,8 @@
-export default function Users() {
+import initTranslations from "@/i18n/i18nInitTranslations";
+
+export default async function Users({ params }: {params: Promise<{ locale: string }>}) {
+    const { locale } = await params;
+    const { t } = await initTranslations(locale, ['common'])
     return (
         <div className='flex justify-center flex-wrap '>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-50 spining-gear">
@@ -7,7 +11,7 @@ export default function Users() {
             </svg>
             
             <h2 className='font-bold text-3xl w-full text-center'>
-                Страница &quot;Пользователи&quot; в разработке
+                {t("users_develop")}
             </h2>
         </div>
     )
