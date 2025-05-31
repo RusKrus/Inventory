@@ -4,9 +4,12 @@ import { removeOrder } from '@/redux/ordersSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/typedReduxHooks';
 import type { DeleteOrderProps } from '@/utils/types';
 import { getOrderById, getRelatedProducts } from '@/redux/selectors';
+import { useTranslation } from 'react-i18next';
 
 
 export default function DeleteOrder({orderId}: DeleteOrderProps): React.JSX.Element {
+    //некоторые используемые строки находятся в create_product_form, что не совсем интуитивно понятно. Приходится их периспользовать, так как nexus исчерпал количество бесплатных переводов 😿
+    const { t } = useTranslation(["delete_forms", "forms_common", "create_product_form", "menu"])
 
     const dispatch = useAppDispatch();
 
@@ -30,23 +33,23 @@ export default function DeleteOrder({orderId}: DeleteOrderProps): React.JSX.Elem
 
     return (
         <>
-            <h3 className='font-bold text-xl p-5 bg-red-600 rounded-t-md text-white mb-5'>Вы точно хотите удалить этот приход?</h3>
+            <h3 className='font-bold text-xl p-5 bg-red-600 rounded-t-md text-white mb-5'>{t("delete_order_title")}</h3>
             <div className='px-4 font-semibold'>
-                <h4 className='text-xl mb-3 '>Имя прихода: <span className=' text-red-500'>{currentOrder.title}</span></h4>
-                <h4 className='text-xl mb-5 pb-3 border-dotted border-b-2  '>Описание прихода: <span className=' italic font-normal'>{currentOrder.description}</span></h4>
-                <h4 className='text-xl mb-3 text-center'>Продукты:</h4>
+                <h4 className='text-xl mb-3 '>{t("create_product_form:order_name_field")}: <span className=' text-red-500'>{currentOrder.title}</span></h4>
+                <h4 className='text-xl mb-5 pb-3 border-dotted border-b-2  '>{t("description")}: <span className=' italic font-normal'>{currentOrder.description}</span></h4>
+                <h4 className='text-xl mb-3 text-center'>{t("menu:products")}</h4>
 
             </div>
             
             <div>
                 {relatedProducts.length > 0?
                 relatedProducts.map((productData: Product, index: number)=><VerySmallProductItem key={index} product={productData}/>):
-                <p className='text-xl font-semibold text-center mb-5 border-y-1 border-gray-200 py-2'>У этого прихода нет продуктов</p>
+                <p className='text-xl font-semibold text-center mb-5 border-y-1 border-gray-200 py-2'>{t("no_products")}</p>
             }
             </div> 
-            <div className='bg-lime-600/90 p-5 rounded-b-md text-right space-x-5 font-semibold'>
-                <button data-modal='close'  className='hover:cursor-pointer text-white hover:text-red-600 duration-100'>Отменить</button>
-                <button data-modal='close' onClick={handleDeleteOrder} className='hover:cursor-pointer text-red-600 bg-white rounded-lg p-1 hover:scale-105 duration-100'>Удалить</button>
+            <div className='p-5 rounded-b-md text-right space-x-5 font-semibold border-t-2 border-dotted text-lg'>
+                <button data-modal='close'  className='hover:cursor-pointer bg-white rounded-lg p-1 hover:scale-105 duration-100'>{t("forms_common:cancel")}</button>
+                <button data-modal='close' onClick={handleDeleteOrder} className='hover:cursor-pointer text-red-600 hover:scale-105 duration-100'>{t("delete")}</button>
             </div>
         </>
     );

@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import OnlineCounter from '@/components/Counter';
 import { getTime, timeUntillMidnight, capitalizeFirstLetter } from '@/utils/utilFunctions';
-import { useTranslation } from 'react-i18next';
+import { i18nConfig } from '@/i18n/i18nConfig';
+import { useCurrentLocale } from 'next-i18n-router/client';
 
 
 
@@ -10,26 +11,26 @@ import { useTranslation } from 'react-i18next';
 
 export default function Clock(): React.JSX.Element {
 
-    const { i18n } = useTranslation();
+    const locale = useCurrentLocale(i18nConfig);
     
     const [time, setTime] = useState<string>(getTime());
-    const [dayOfTheWeek, setDayOfTheWeek] = useState<string>(new Date().toLocaleString(i18n.language, { weekday: 'long'}));
-    const [date, setDate] = useState<string>(new Date().toLocaleString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' }));
+    const [dayOfTheWeek, setDayOfTheWeek] = useState<string>(new Date().toLocaleString(locale, { weekday: 'long'}));
+    const [date, setDate] = useState<string>(new Date().toLocaleString(locale, { day: 'numeric', month: 'long', year: 'numeric' }));
 
     
 
 
     useEffect(()=>{
         const clockTimer = setInterval(() => setTime(getTime()), 1000);
-        const dayTimer = setInterval(() => setDayOfTheWeek(new Date().toLocaleString(i18n.language, { weekday: 'long'})), timeUntillMidnight());
-        const dateTimer = setInterval(() => setDate(new Date().toLocaleString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' })), timeUntillMidnight());
+        const dayTimer = setInterval(() => setDayOfTheWeek(new Date().toLocaleString(locale, { weekday: 'long'})), timeUntillMidnight());
+        const dateTimer = setInterval(() => setDate(new Date().toLocaleString(locale, { day: 'numeric', month: 'long', year: 'numeric' })), timeUntillMidnight());
         
         return (): void => {
             clearInterval(clockTimer);
             clearInterval(dayTimer);
             clearInterval(dateTimer);
         };
-    }, [i18n.language]);
+    }, [locale]);
 
     return (
         

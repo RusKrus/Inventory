@@ -3,6 +3,7 @@
 import { I18nextProvider } from 'react-i18next';
 import initTranslations from './i18nInitTranslations';
 import { createInstance, ResourceLanguage } from 'i18next';
+import { Suspense } from 'react';
 
 type TranslationsProviderProps = {
     children: React.ReactNode,
@@ -22,5 +23,5 @@ export default function TranslationsProvider({
 
   initTranslations(locale, namespaces, i18n, resources);
 
-  return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>;
+  return <I18nextProvider i18n={i18n}><Suspense>{children}</Suspense></I18nextProvider>;
 };

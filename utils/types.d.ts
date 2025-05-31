@@ -74,7 +74,8 @@ export type SmallProductDataContainer = {
 export type CreateOrderFormTypes = {
     dispatch: function, 
     orderNamesArray: string[], 
-    handleCloseDialogClick: function
+    handleCloseDialogClick: function, 
+    locale: stirng
 }
 
 export type ErrorProps = {
@@ -83,20 +84,20 @@ export type ErrorProps = {
 }
 
 export type DeleteOrderProps = {
-    orderId?:string
+    orderId?:string, 
 }
 
 export type DeleteProductProps = {
-    productId?: string;
+    productId?: string, 
 }
 
 export type AddOrderFormProps = {
-    setCurrentContent: function
+    setCurrentContent: function, 
 }
 
 export type AddProductFormProps = {
     orderId?:string,
-    setCurrentContent: function
+    setCurrentContent: function, 
 }
 
 export type FormInitialState = {

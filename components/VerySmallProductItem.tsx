@@ -10,7 +10,7 @@ export default function SmallProductItem({product}: SmallProductDataContainer ):
 
 
     return (
-        <div className='flex min-w-full justify-between w-fit items-center py-2 px-10 border-y-1 border-gray-300 text-gray-500 text-lg space-x-2 bg-white '>
+        <div className='flex min-w-full justify-between w-fit items-center py-2 px-10 border-t-1 border-gray-300 text-gray-500 text-lg space-x-2 bg-white '>
             <div className='flex items-center '>
                 <Image 
                     src={src}
