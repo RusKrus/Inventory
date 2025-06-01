@@ -7,8 +7,8 @@
     "dev:next": "next dev --turbopack && i18nexus pull",
     "ws:server": "node server.js",
     "dev": "concurrently -k \"npm run dev:next\" \"npm run ws:server\"",
-    "build": "next build && i18nexus pull",
-    "start:next": "next start && i18nexus pull",
+    "build": "next build ",
+    "start:next": "next start",
     "start": "concurrently -k \"npm run start:next\" \"npm run ws:server\"",
     "lint": "next lint"
   },

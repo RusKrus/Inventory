@@ -10,6 +10,13 @@ export default function LanguageSwithcer(): React.JSX.Element {
     const locale = useCurrentLocale(i18nConfig)??"ru";
     const handleOptionClick = (e: React.ChangeEvent<HTMLSelectElement>): void => {
       const newLocale: string = e.currentTarget.value;
+
+      const days = 30;
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      const expires = date.toUTCString();
+      document.cookie = `NEXT_LOCALE=${newLocale};expires=${expires};path=/`;
+
       if(locale==='ru'){
         router.push(`${newLocale}/${pathname}`);
       }
